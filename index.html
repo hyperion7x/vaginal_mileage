@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <!-- 
-        Calcolatore di Chilometraggio Vaginale
+        Pussy Kilometer
         Copyright © 2025 hyperionx
         Creato con l'assistenza di Grok 3, xAI
         Licenza: Tutti i diritti riservati
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Calcolatore divertente per stimare la distanza vaginale percorsa, per curiosità matematica!">
     <meta name="keywords" content="calcolatore, vaginal mileage, curiosità, matematica">
-    <title>Calcolatore di Chilometraggio Vaginale</title>
+    <title>Pussy Kilometer</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -25,6 +25,12 @@
         h1 {
             color: #ff69b4; /* Rosa */
             animation: pulse 2s infinite;
+        }
+        .subtitle {
+            font-size: 0.9em;
+            font-style: italic;
+            color: #ff1493; /* Rosa scuro */
+            margin-top: 5px;
         }
         .form-group {
             margin: 10px 0;
@@ -113,7 +119,8 @@
     </style>
 </head>
 <body>
-    <h1>💗 Calcolatore di Chilometraggio Vaginale</h1>
+    <h1>💗 Pussy Kilometer</h1>
+    <p class="subtitle">Calcolatore di Chilometraggio Vaginale</p>
     <p>Inserisci i dati per scoprire quanta strada hai percorso! 🌸</p>
     
     <div class="form-group">
@@ -227,14 +234,22 @@
                 comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come una passeggiata da Roma a Frascati (~20 km)! 🌷`;
             } else if (totalDistanceKm < 100) {
                 comparison = `Grande! Hai percorso ${totalDistanceKm.toFixed(2)} km, come una maratona (42 km)! 🏃‍♀️`;
+            } else if (totalDistanceKm < 150) {
+                comparison = `Fantastico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come una fuga in barca da Napoli a Capri (~40 km)! ⛵`;
             } else if (totalDistanceKm < 200) {
-                comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come da Torino a Genova (~170 km)! 🚤`;
+                comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come un tour passionale lungo la Costiera Amalfitana (~100 km)! 🌊`;
             } else if (totalDistanceKm < 300) {
                 comparison = `Incredibile! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Roma a Firenze (~250 km)! 🚗`;
+            } else if (totalDistanceKm < 400) {
+                comparison = `Grande! Hai percorso ${totalDistanceKm.toFixed(2)} km, come un weekend sexy da Milano a Ginevra (~250 km)! 🏔️`;
             } else if (totalDistanceKm < 600) {
                 comparison = `Stupefacente! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Roma a Venezia (~400 km)! 🛶`;
-            } else if (totalDistanceKm < 2000) {
+            } else if (totalDistanceKm < 800) {
+                comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come un volo romantico da Roma a Parigi (~1100 km)! ✈️`;
+            } else if (totalDistanceKm < 1200) {
                 comparison = `Monumentale! Hai percorso ${totalDistanceKm.toFixed(2)} km, come la lunghezza dell’Italia (~1200 km)! 🇮🇹`;
+            } else if (totalDistanceKm < 5000) {
+                comparison = `Epico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come un viaggio selvaggio sulla Transiberiana (~3000 km)! 🚂`;
             } else if (totalDistanceKm < 10000) {
                 comparison = `Leggendario! Hai percorso ${totalDistanceKm.toFixed(2)} km, come la Muraglia Cinese (~2000 km)! 🏯`;
             } else if (totalDistanceKm < 40000) {
@@ -260,17 +275,29 @@
             const increment = targetKm / steps;
             const duration = 2000; // 2 secondi
             const intervalTime = duration / steps;
+            let lastMilestone = 0; // Traccia l'ultimo multiplo di 100 km superato
 
             console.log(`Starting animation: targetKm = ${targetKm}, increment = ${increment}, intervalTime = ${intervalTime}`);
 
             const interval = setInterval(() => {
                 currentKm += increment;
+                // Controlla se si supera un multiplo di 100 km
+                const currentMilestone = Math.floor(currentKm / 100) * 100;
+                if (currentMilestone > lastMilestone && currentKm < targetKm) {
+                    lastMilestone = currentMilestone;
+                    const odometerSound = document.getElementById('odometerSound');
+                    if (odometerSound) {
+                        odometerSound.play().catch(error => {
+                            console.error('Errore nella riproduzione del suono:', error);
+                        });
+                    }
+                }
                 if (currentKm >= targetKm) {
                     currentKm = targetKm;
                     clearInterval(interval);
                     isCalculating = false;
                     calculateButton.disabled = false;
-                    // Riproduce il suono
+                    // Riproduce il suono finale
                     const odometerSound = document.getElementById('odometerSound');
                     if (odometerSound) {
                         odometerSound.play().catch(error => {
