@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- 
+        Calcolatore di Chilometraggio Vaginale
+        Copyright © 2025 hyperionx
+        Creato con l'assistenza di Grok 3, xAI
+        Licenza: Tutti i diritti riservati
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore di Chilometraggio Vaginale</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+        }
+        h1 {
+            color: #ff69b4; /* Rosa */
+            animation: pulse 2s infinite;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        label {
+            display: inline-block;
+            width: 250px;
+            text-align: left;
+            color: #333;
+        }
+        input {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ff69b4;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .odometer {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2em;
+            color: #ff1493; /* Rosa scuro */
+            margin: 10px 0;
+        }
+        .comparison {
+            font-style: italic;
+            color: #555;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 20px;
+        }
+        .copyright {
+            font-size: 0.8em;
+            color: #444;
+            margin-top: 20px;
+            border-top: 1px solid #ff69b4;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .copyright img {
+            width: 32px;
+            height: 32px;
+            margin-right: 5px;
+        }
+        canvas {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>💗 Calcolatore di Chilometraggio Vaginale</h1>
+    <p>Inserisci i dati per scoprire quanta strada hai percorso! 🌸</p>
+    
+    <div class="form-group">
+        <label>Età di inizio attività sessuale (anni):</label>
+        <input type="number" id="startAge" value="18" min="17" step="1">
+    </div>
+    <div class="form-group">
+        <label>Età attuale (anni):</label>
+        <input type="number" id="currentAge" value="40" min="17" step="1">
+    </div>
+    <div class="form-group">
+        <label>Frequenza media rapporti al mese:</label>
+        <input type="number" id="frequencyMonthly" value="5" min="0" step="0.1">
+    </div>
+    <div class="form-group">
+        <label>Durata media rapporto (minuti):</label>
+        <input type="number" id="durationMinutes" value="6" min="0" step="0.1">
+    </div>
+    <div class="form-group">
+        <label>Lunghezza media del pene (cm):</label>
+        <input type="number" id="penisLength" value="15" min="0" step="0.1">
+    </div>
+    <div class="form-group">
+        <label>Cicli di penetrazione al minuto:</label>
+        <input type="number" id="cyclesPerMinute" value="80" min="0" step="1">
+    </div>
+    
+    <button id="calculateButton">Calcola Chilometraggio! 👄</button>
+    
+    <div id="result"></div>
+    <canvas id="mileageChart" width="400" height="200"></canvas>
+    
+    <p class="disclaimer">
+        Nota: Questo è un calcolo teorico per scopi di curiosità matematica. 
+        La vagina non subisce "usura" come un oggetto meccanico. 
+        Consulta un medico per informazioni sulla salute vaginale.
+    </p>
+    
+    <footer>
+        <p class="copyright">
+            <img src="icon.png" alt="Icona personale">
+            © 2025 hyperionx. Tutti i diritti riservati. Creato con l'assistenza di Grok 3, xAI.
+        </p>
+    </footer>
+
+    <script>
+        let isCalculating = false;
+
+        function calculateMileage() {
+            if (isCalculating) return;
+            isCalculating = true;
+            const calculateButton = document.getElementById('calculateButton');
+            calculateButton.disabled = true;
+
+            // Raccolta input
+            const startAge = parseFloat(document.getElementById('startAge').value);
+            const currentAge = parseFloat(document.getElementById('currentAge').value);
+            const frequencyMonthly = parseFloat(document.getElementById('frequencyMonthly').value);
+            const durationMinutes = parseFloat(document.getElementById('durationMinutes').value);
+            const penisLength = parseFloat(document.getElementById('penisLength').value);
+            const cyclesPerMinute = parseFloat(document.getElementById('cyclesPerMinute').value);
+
+            // Validazione
+            if (isNaN(startAge) || isNaN(currentAge) || isNaN(frequencyMonthly) || 
+                isNaN(durationMinutes) || isNaN(penisLength) || isNaN(cyclesPerMinute)) {
+                document.getElementById('result').innerHTML = "Errore: Inserisci valori numerici validi.";
+                isCalculating = false;
+                calculateButton.disabled = false;
+                return;
+            }
+            if (startAge < 17) {
+                document.getElementById('result').innerHTML = "Errore: L'età di inizio non può essere inferiore a 17 anni.";
+                isCalculating = false;
+                calculateButton.disabled = false;
+                return;
+            }
+            if (startAge >= currentAge) {
+                document.getElementById('result').innerHTML = "Errore: L'età attuale deve essere maggiore dell'età di inizio.";
+                isCalculating = false;
+                calculateButton.disabled = false;
+                return;
+            }
+            if (frequencyMonthly < 0 || durationMinutes < 0 || penisLength < 0 || cyclesPerMinute < 0) {
+                document.getElementById('result').innerHTML = "Errore: I valori non possono essere negativi.";
+                isCalculating = false;
+                calculateButton.disabled = false;
+                return;
+            }
+
+            // Calcolo
+            const yearsActive = currentAge - startAge;
+            const distancePerCycleCm = penisLength * 2;
+            const distancePerMinuteCm = distancePerCycleCm * cyclesPerMinute;
+            const distancePerSessionCm = distancePerMinuteCm * durationMinutes;
+            const distancePerMonthCm = distancePerSessionCm * frequencyMonthly;
+            const distancePerYearCm = distancePerMonthCm * 12;
+            const totalDistanceCm = distancePerYearCm * yearsActive;
+            const totalDistanceKm = totalDistanceCm / 100000;
+
+            // Log per debug
+            console.log(`Total Distance (km): ${totalDistanceKm.toFixed(2)}`);
+
+            // Confronto umoristico
+            let comparison = "";
+            if (totalDistanceKm < 50) {
+                comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come una passeggiata da Roma a Frascati (~20 km)! 🌷`;
+            } else if (totalDistanceKm < 100) {
+                comparison = `Grande! Hai percorso ${totalDistanceKm.toFixed(2)} km, come una maratona (42 km)! 🏃‍♀️`;
+            } else if (totalDistanceKm < 300) {
+                comparison = `Incredibile! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Roma a Firenze (~250 km)! 🚗`;
+            } else if (totalDistanceKm < 600) {
+                comparison = `Fantastico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Milano a Napoli (~470 km)! 🚂`;
+            } else if (totalDistanceKm < 2000) {
+                comparison = `Epico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come l'intera Via Appia Antica (~1000 km)! 🏛️`;
+            } else if (totalDistanceKm < 10000) {
+                comparison = `Leggendario! Hai percorso ${totalDistanceKm.toFixed(2)} km, come la Muraglia Cinese (~2000 km)! 🏯`;
+            } else if (totalDistanceKm < 40000) {
+                comparison = `Mitico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come il giro del mondo (~40000 km)! 🌍`;
+            } else {
+                comparison = `Galattico! Hai percorso ${totalDistanceKm.toFixed(2)} km, più della distanza Terra-Luna (~384400 km)! 🌕`;
+            }
+
+            // Creazione del risultato
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <strong>Risultato:</strong><br>
+                Anni di attività sessuale: ${yearsActive.toFixed(1)} anni<br>
+                <div class="odometer">0.00 km</div>
+                <div class="comparison">${comparison}</div>
+            `;
+
+            // Animazione del contachilometri
+            const odometer = resultDiv.querySelector('.odometer');
+            let currentKm = 0;
+            const targetKm = totalDistanceKm;
+            const steps = 100;
+            const increment = targetKm / steps;
+            const duration = 2000; // 2 secondi
+            const intervalTime = duration / steps;
+
+            console.log(`Starting animation: targetKm = ${targetKm}, increment = ${increment}, intervalTime = ${intervalTime}`);
+
+            const interval = setInterval(() => {
+                currentKm += increment;
+                if (currentKm >= targetKm) {
+                    currentKm = targetKm;
+                    clearInterval(interval);
+                    isCalculating = false;
+                    calculateButton.disabled = false;
+                }
+                odometer.innerText = `${currentKm.toFixed(2)} km`;
+                console.log(`CurrentKm: ${currentKm.toFixed(2)}`);
+            }, intervalTime);
+
+            // Grafico Chart.js
+            const yearlyDistance = distancePerYearCm / 100000; // km per anno
+            const years = Array.from({ length: Math.floor(yearsActive) + 1 }, (_, i) => startAge + i);
+            const distances = Array.from({ length: Math.floor(yearsActive) + 1 }, (_, i) => yearlyDistance * i);
+
+            const ctx = document.getElementById('mileageChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Distanza Percorsa (km)',
+                        data: distances,
+                        borderColor: '#ff69b4',
+                        backgroundColor: 'rgba(255, 105, 180, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: 'Età' } },
+                        y: { title: { display: true, text: 'Distanza (km)' } }
+                    }
+                }
+            });
+        }
+
+        // Aggiunta del listener per il pulsante
+        document.getElementById('calculateButton').addEventListener('click', calculateMileage);
+    </script>
+</body>
+</html>
