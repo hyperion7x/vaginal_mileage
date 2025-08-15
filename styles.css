@@ -1,0 +1,235 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #ff69b4;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-container {
+    flex: 1;
+}
+
+.chart-container {
+    flex: 1;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+select, button, input {
+    margin: 8px 0;
+    padding: 10px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+}
+
+button {
+    background-color: #ff69b4;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff1493;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#instructions, #warning, #disclaimer {
+    font-size: 0.9em;
+    margin: 10px 0;
+}
+
+#warning {
+    color: #ff4500;
+}
+
+#disclaimer {
+    font-style: italic;
+    color: #666;
+}
+
+#result {
+    margin: 20px 0;
+    font-size: 1.2em;
+}
+
+.odometer {
+    font-size: 2.5em;
+    color: #ff69b4;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.reward-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.reward {
+    font-size: 3em;
+    margin-right: 15px;
+}
+
+.reward-message {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.fullscreen-reward {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    color: #ff69b4;
+    font-size: 2em;
+    opacity: 0;
+    animation: rewardFadeIn 1s ease-in-out forwards;
+}
+
+.fullscreen-reward .reward {
+    font-size: 4em;
+}
+
+.fullscreen-reward .reward-message {
+    color: #ff69b4;
+    font-size: 1.5em;
+}
+
+.fade-out {
+    animation: rewardFadeOut 1s ease-in-out forwards;
+}
+
+.error {
+    color: #ff4500;
+    font-weight: bold;
+}
+
+#mileageChart {
+    width: 100%;
+    max-width: 300px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    font-weight: bold;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .form-container, .chart-container {
+        flex: 1;
+    }
+
+    .chart-container {
+        max-width: 600px;
+    }
+
+    form {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        max-width: 600px;
+    }
+
+    select, button, input {
+        max-width: none;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .odometer {
+        font-size: 3em;
+    }
+
+    .reward {
+        font-size: 4em;
+    }
+
+    .reward-message {
+        font-size: 1.5em;
+    }
+
+    #mileageChart {
+        max-width: 600px;
+    }
+}
+
+@keyframes rewardFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rewardFadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.8); }
+}
