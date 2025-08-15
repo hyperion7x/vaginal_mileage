@@ -9,6 +9,8 @@
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calcolatore divertente per stimare la distanza vaginale percorsa, per curiosità matematica!">
+    <meta name="keywords" content="calcolatore, vaginal mileage, curiosità, matematica">
     <title>Calcolatore di Chilometraggio Vaginale</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -75,10 +77,14 @@
             font-style: italic;
             color: #555;
         }
-        .disclaimer {
+        .disclaimer, .warning {
             font-size: 0.9em;
             color: #666;
             margin-top: 20px;
+        }
+        .warning {
+            color: #ff1493;
+            font-weight: bold;
         }
         .copyright {
             font-size: 0.8em;
@@ -140,6 +146,9 @@
     <div id="result"></div>
     <canvas id="mileageChart" width="400" height="200"></canvas>
     
+    <p class="warning">
+        Avviso: Questo calcolatore contiene temi espliciti ed è destinato a un pubblico adulto per scopi di curiosità matematica.
+    </p>
     <p class="disclaimer">
         Nota: Questo è un calcolo teorico per scopi di curiosità matematica. 
         La vagina non subisce "usura" come un oggetto meccanico. 
@@ -149,10 +158,12 @@
     <footer>
         <p class="copyright">
             <img src="icon.png" alt="Icona personale">
-            © 2025 hyperionx. Tutti i diritti riservati. Creato con l'assistenza di Grok 3, xAI.
+            © 2025 hyperionx. Tutti i diritti riservati. Creato con l’assistenza di Grok 3, xAI.
         </p>
     </footer>
-  <audio id="odometerSound" src="click.mp3"></audio>
+    
+    <audio id="odometerSound" src="click.mp3"></audio>
+
     <script>
         let isCalculating = false;
 
@@ -216,12 +227,14 @@
                 comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come una passeggiata da Roma a Frascati (~20 km)! 🌷`;
             } else if (totalDistanceKm < 100) {
                 comparison = `Grande! Hai percorso ${totalDistanceKm.toFixed(2)} km, come una maratona (42 km)! 🏃‍♀️`;
+            } else if (totalDistanceKm < 200) {
+                comparison = `Wow, hai percorso ${totalDistanceKm.toFixed(2)} km, come da Torino a Genova (~170 km)! 🚤`;
             } else if (totalDistanceKm < 300) {
                 comparison = `Incredibile! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Roma a Firenze (~250 km)! 🚗`;
             } else if (totalDistanceKm < 600) {
-                comparison = `Fantastico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Milano a Napoli (~470 km)! 🚂`;
+                comparison = `Stupefacente! Hai percorso ${totalDistanceKm.toFixed(2)} km, come da Roma a Venezia (~400 km)! 🛶`;
             } else if (totalDistanceKm < 2000) {
-                comparison = `Epico! Hai percorso ${totalDistanceKm.toFixed(2)} km, come l'intera Via Appia Antica (~1000 km)! 🏛️`;
+                comparison = `Monumentale! Hai percorso ${totalDistanceKm.toFixed(2)} km, come la lunghezza dell’Italia (~1200 km)! 🇮🇹`;
             } else if (totalDistanceKm < 10000) {
                 comparison = `Leggendario! Hai percorso ${totalDistanceKm.toFixed(2)} km, come la Muraglia Cinese (~2000 km)! 🏯`;
             } else if (totalDistanceKm < 40000) {
@@ -257,6 +270,13 @@
                     clearInterval(interval);
                     isCalculating = false;
                     calculateButton.disabled = false;
+                    // Riproduce il suono
+                    const odometerSound = document.getElementById('odometerSound');
+                    if (odometerSound) {
+                        odometerSound.play().catch(error => {
+                            console.error('Errore nella riproduzione del suono:', error);
+                        });
+                    }
                 }
                 odometer.innerText = `${currentKm.toFixed(2)} km`;
                 console.log(`CurrentKm: ${currentKm.toFixed(2)}`);
@@ -291,9 +311,7 @@
             });
         }
 
-        // Aggiunta del listener per il pulsante
         document.getElementById('calculateButton').addEventListener('click', calculateMileage);
     </script>
 </body>
 </html>
-
